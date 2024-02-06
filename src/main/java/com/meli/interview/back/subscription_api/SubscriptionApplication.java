@@ -1,13 +1,14 @@
-package com.meli.interview.back.subscription_api;
+	package com.meli.interview.back.subscription_api;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+	import com.meli.interview.back.subscription_api.domain.User;
+	import org.springframework.boot.SpringApplication;
+	import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
-public class SubscriptionApplication {
+	@SpringBootApplication
+	public class SubscriptionApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SubscriptionApplication.class, args);
+		public static void main(String[] args) {
+			SpringApplication.run(SubscriptionApplication.class, args);
+		}
+
 	}
-
-}
