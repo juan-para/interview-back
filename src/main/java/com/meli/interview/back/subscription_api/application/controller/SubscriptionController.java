@@ -1,5 +1,6 @@
 package com.meli.interview.back.subscription_api.application.controller;
 
+import com.meli.interview.back.subscription_api.application.controller.request.SubscriptionRequest;
 import com.meli.interview.back.subscription_api.application.service.SubscriptionService;
 import com.meli.interview.back.subscription_api.application.service.UserService;
 import com.meli.interview.back.subscription_api.domain.Partner;
@@ -8,6 +9,7 @@ import com.meli.interview.back.subscription_api.domain.User;
 import com.meli.interview.back.subscription_api.infrastructure.SubscriptionRepository;
 import com.meli.interview.back.subscription_api.infrastructure.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,14 +32,12 @@ public class SubscriptionController {
 
     @PostMapping("/subscribe")
     @ResponseBody
-    public String subscribe(
-            @RequestBody String userId,
-            @RequestBody String partner) {
+    public ResponseEntity<String> subscribe(@RequestBody SubscriptionRequest request) {
         Subscription subscription = Subscription.builder()
-                .partner(Partner.valueOf(partner))
+                .partner(Partner.valueOf(request.getPartner()))
                 .build();
-        userService.addSubscriptionByUser(userId, subscription);
-        return "Subscribed successfully";
+        userService.addSubscriptionByUser(request.getUserId(), subscription);
+        return ResponseEntity.ok("Subscribed successfully");
     }
 
     @GetMapping("/subscriptions")
