@@ -1,14 +1,14 @@
 package com.meli.interview.back.subscription_api.infrastructure;
 
 import com.meli.interview.back.subscription_api.domain.User;
-import com.meli.interview.back.subscription_api.domain.interfaces.FriendshipRepository;
+import com.meli.interview.back.subscription_api.domain.interfaces.IFriendshipRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class InMemoryFriendshipRepository implements FriendshipRepository {
+public class FriendshipRepository implements IFriendshipRepository {
 
     private final List<User> friends = new ArrayList<>();
 

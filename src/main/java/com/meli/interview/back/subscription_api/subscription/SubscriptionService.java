@@ -15,7 +15,7 @@ public class SubscriptionService {
      * @param user
      * @return costo total de la suscripciones del user
      * @throws UserNotLoggedInException si no hay un usuario logueado
-     */
+
     public Float getUserSubscriptionsCost(User user) throws UserNotLoggedInException {
         ArrayList<Subscription> subscriptionList = new ArrayList<Subscription>();
 
@@ -43,5 +43,5 @@ public class SubscriptionService {
         } else {
             throw new UserNotLoggedInException();
         }
-    }
+    }*/
 }

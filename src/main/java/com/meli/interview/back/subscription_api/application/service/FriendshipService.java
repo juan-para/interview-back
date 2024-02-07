@@ -1,14 +1,14 @@
 package com.meli.interview.back.subscription_api.application.service;
 
-import com.meli.interview.back.subscription_api.domain.interfaces.FriendshipRepository;
 import com.meli.interview.back.subscription_api.domain.User;
+import com.meli.interview.back.subscription_api.domain.interfaces.IFriendshipService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class FriendshipService implements FriendshipRepository {
+public class FriendshipService implements IFriendshipService {
     private List<User> friends = new ArrayList<>();
 
     @Override

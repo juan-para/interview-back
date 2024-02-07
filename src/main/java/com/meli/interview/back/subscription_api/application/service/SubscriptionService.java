@@ -1,21 +1,37 @@
 package com.meli.interview.back.subscription_api.application.service;
 
+import com.meli.interview.back.subscription_api.domain.Subscription;
 import com.meli.interview.back.subscription_api.domain.User;
+import com.meli.interview.back.subscription_api.domain.interfaces.ISubscriptionService;
+import com.meli.interview.back.subscription_api.infrastructure.SubscriptionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
-public class SubscriptionService {
+import java.util.List;
 
-    private final FriendshipService friendshipService;
+@Service
+public class SubscriptionService implements ISubscriptionService {
+
+
+    @Autowired
+    private FriendshipService friendshipService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private SubscriptionRepository subscriptionRepository;
 
     public SubscriptionService(FriendshipService friendshipService) {
         this.friendshipService = friendshipService;
     }
 
+    @Override
     public float calculateUserSubscriptionsCost(User user) {
-        // Lógica para calcular el costo total de las suscripciones del usuario
-        // Puedes usar el FriendshipService y otras clases del dominio según sea necesario
-        // ...
-        return 0.0f;  // Reemplaza con la lógica real
+        return 0.0f;
+    }
+
+    @Override
+    public List<Subscription> findSubscriptionByUserId(String id) {
+        User user = userService.getUserById(id).get();
+        return user.getSubscribedList();
     }
 }

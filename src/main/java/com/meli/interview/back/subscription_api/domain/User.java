@@ -1,36 +1,32 @@
 package com.meli.interview.back.subscription_api.domain;
 
-import com.meli.interview.back.subscription_api.domain.interfaces.FriendshipRepository;
-import com.meli.interview.back.subscription_api.domain.interfaces.SubscriptionRepository;
+import com.meli.interview.back.subscription_api.domain.interfaces.IFriendshipRepository;
+import com.meli.interview.back.subscription_api.domain.interfaces.ISubscriptionRepository;
+import com.meli.interview.back.subscription_api.infrastructure.FriendshipRepository;
+import com.meli.interview.back.subscription_api.infrastructure.SubscriptionRepository;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
 @Builder
 public class User {
     private String id;
     private String name;
-    @Autowired
-    SubscriptionRepository subscriptionRepository;
-    @Autowired
-    private FriendshipRepository friendshipRepository;
-
-
-    public List<Subscription> subscriptions() {
-        return subscriptionRepository.findSubscriptionsByUser(this);
-    }
-    public void addSubscription(Subscription subscription) {
-        subscriptionRepository.saveSubscription(subscription);
-    }
-    public List<User> getFriends() {
-        return friendshipRepository.getFriends(this);
-    }
-    public void addFriend(User friend) {
-        friendshipRepository.addFriend(this, friend);
-    }
+    @Builder.Default
+    private List<Subscription> subscribedList = new ArrayList<>();
 }
