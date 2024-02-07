@@ -5,17 +5,13 @@ import com.meli.interview.back.subscription_api.application.service.Subscription
 import com.meli.interview.back.subscription_api.application.service.UserService;
 import com.meli.interview.back.subscription_api.domain.Partner;
 import com.meli.interview.back.subscription_api.domain.Subscription;
-import com.meli.interview.back.subscription_api.domain.User;
 import com.meli.interview.back.subscription_api.infrastructure.SubscriptionRepository;
-import com.meli.interview.back.subscription_api.infrastructure.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import com.meli.interview.back.subscription_api.exception.UserNotLoggedInException;
 
 import java.util.List;
 
@@ -45,5 +41,19 @@ public class SubscriptionController {
     public List<Subscription> getUserSubscriptions(
             @RequestParam String userId) {
         return subscriptionService.findSubscriptionByUserId(userId);
+    }
+
+    @GetMapping("/subscriptionCost")
+    @ResponseBody
+    public ResponseEntity<String> getUserSubscriptionCost(@RequestParam String userId) {
+        try {
+            //Asumo que existe el usuarioo para controlar sus subscripciones...
+            Float subscriptionCost = subscriptionService.getUserSubscriptionsCost(
+                    userService.getUserById(userId).orElseThrow(UserNotLoggedInException::new)
+            );
+            return ResponseEntity.ok("Total cost: "+ subscriptionCost);
+        } catch (UserNotLoggedInException e) {
+            return ResponseEntity.status(401).body("User Not Logged In.");
+        }
     }
 }

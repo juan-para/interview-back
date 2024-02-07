@@ -28,5 +28,5 @@ public class User {
     private String id;
     private String name;
     @Builder.Default
-    private List<Subscription> subscribedList = new ArrayList<>();
+    private ArrayList<Subscription> subscribedList = new ArrayList<>();
 }

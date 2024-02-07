@@ -12,8 +12,8 @@ import java.util.ArrayList;
 
 public class SubscriptionService {
 
-    //@Autowired
-    //FriendshipService friendshipService;
+    @Autowired
+    FriendshipService friendshipService;
     /**
      * Devuelve el costo total de las suscripciones de un usuario siempre que el usuario que esté logueado
      * se encuentre en su lista de amigos
@@ -21,7 +21,7 @@ public class SubscriptionService {
      * @return costo total de la suscripciones del user
      * @throws UserNotLoggedInException si no hay un usuario logueado
      */
-    /*
+
     public Float getUserSubscriptionsCost(User user) throws UserNotLoggedInException {
         User loggedUser = UserSession.getInstance().getLoggedUser();
 
@@ -34,7 +34,6 @@ public class SubscriptionService {
             return 0f;
         }
     }
-
 
     private boolean isFriend(User user, User loggedUser){
         // No puede no devolver nulo por como lo implemente
@@ -55,6 +54,4 @@ public class SubscriptionService {
             throw new UserNotLoggedInException();
         }
     }
-    */
-
 }
