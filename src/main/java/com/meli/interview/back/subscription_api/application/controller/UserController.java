@@ -29,8 +29,6 @@ public class UserController {
     public ResponseEntity<String> createUser(@Valid @RequestBody CreateUserRequest request) {
         User newUser = userService.createUser(request.getUserName());
         userRepository.saveUser(newUser);
-        return ResponseEntity.ok(
-                "Usuario creado exitosamente" + userRepository.findUserById(newUser.getId())
-        );
+        return ResponseEntity.ok( "Usuario creado exitosamente: " + userRepository.findUserById(newUser.getId()));
     }
 }

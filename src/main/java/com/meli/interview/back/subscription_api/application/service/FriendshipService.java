@@ -2,6 +2,8 @@ package com.meli.interview.back.subscription_api.application.service;
 
 import com.meli.interview.back.subscription_api.domain.User;
 import com.meli.interview.back.subscription_api.domain.interfaces.IFriendshipService;
+import com.meli.interview.back.subscription_api.infrastructure.FriendshipRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -9,15 +11,21 @@ import java.util.List;
 
 @Service
 public class FriendshipService implements IFriendshipService {
-    private List<User> friends = new ArrayList<>();
+
+    @Autowired
+    FriendshipRepository friendshipRepository;
+    @Autowired
+    UserService userService;
 
     @Override
-    public List<User> getFriends(User user) {
-        return friends;
+    public List<User> getFriends(String userId) {
+        return friendshipRepository.getFriends(userId);
     }
 
     @Override
-    public void addFriend(User user, User friend) {
-        friends.add(user);
+    public void addFriend(String userId, String friendId) {
+        // Asumo que el amigo del usuario ya existe
+        User friend = userService.getUserById(friendId).get();
+        friendshipRepository.addFriend(userId, friend);
     }
 }

@@ -5,23 +5,23 @@ import com.meli.interview.back.subscription_api.domain.interfaces.IFriendshipRep
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class FriendshipRepository implements IFriendshipRepository {
 
-    private final List<User> friends = new ArrayList<>();
+    private final Map<String, List<User>> friendsList = new HashMap<>();
 
     @Override
-    public List<User> getFriends(User user) {
-        // Implementación para obtener amigos de un usuario
-        // ...
-        return new ArrayList<>();  // Reemplaza con la lógica real
+    public List<User> getFriends(String userId) {
+        return friendsList.get(userId);
     }
 
     @Override
-    public void addFriend(User user, User friend) {
-        // Implementación para agregar un amigo a un usuario
-        // ...
+    public void addFriend(String userId, User friend) {
+        //Lo agrego a un nuevo array si la key no tiene valores asociados
+        friendsList.computeIfAbsent(userId, k -> new ArrayList<>()).add(friend);
     }
 }

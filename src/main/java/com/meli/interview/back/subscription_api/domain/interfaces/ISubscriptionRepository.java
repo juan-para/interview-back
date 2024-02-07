@@ -7,6 +7,5 @@ import java.util.List;
 
 public interface ISubscriptionRepository {
     List<Subscription> findSubscriptionsByUser(User user);
-
     void saveSubscription(Subscription subscription);
 }

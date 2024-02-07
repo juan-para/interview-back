@@ -7,8 +7,6 @@ import com.meli.interview.back.subscription_api.infrastructure.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,7 +18,7 @@ public class UserService implements IUserService {
     @Override
     public User createUser(String userName) {
         User newUser = User.builder()
-                .id(Instant.now().toString())
+                .id("" + System.nanoTime())
                 .name(userName)
                 .build();
         return newUser;
