@@ -27,6 +27,7 @@ public class UserController {
     @PostMapping("/createUser")
     @ResponseBody
     public ResponseEntity<String> createUser(@Valid @RequestBody CreateUserRequest request) {
+        // Se podria hacer de manera asincornica o implementando topicos
         User newUser = userService.createUser(request.getUserName());
         userRepository.saveUser(newUser);
         return ResponseEntity.ok( "Usuario creado exitosamente: " + userRepository.findUserById(newUser.getId()));
