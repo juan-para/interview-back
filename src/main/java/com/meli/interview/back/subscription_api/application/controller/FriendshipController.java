@@ -27,8 +27,13 @@ public class FriendshipController {
     @PostMapping("/addFriend")
     @ResponseBody
     public ResponseEntity<String> addFriend(@Valid @RequestBody FriendshipRequest request) {
-        friendshipService.addFriend(request.getUserId(), request.getFriendId());
-        return ResponseEntity.ok("Friend added successfully");
+        try{
+            friendshipService.addFriend(request.getUserId(), request.getFriendId());
+            return ResponseEntity.ok("Friend added successfully");
+        } catch (RuntimeException e){
+            return ResponseEntity.status(400).body("No te puedes agregar como amigo");
+        }
+
     }
 
     @GetMapping("/friends")

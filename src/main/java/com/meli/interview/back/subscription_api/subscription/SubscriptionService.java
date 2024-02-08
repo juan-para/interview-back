@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class SubscriptionService {
 
-    @Autowired
+    /*@Autowired
     FriendshipService friendshipService;
     /**
      * Devuelve el costo total de las suscripciones de un usuario siempre que el usuario que esté logueado
@@ -20,7 +20,7 @@ public class SubscriptionService {
      * @param user
      * @return costo total de la suscripciones del user
      * @throws UserNotLoggedInException si no hay un usuario logueado
-     */
+
 
     public Float getUserSubscriptionsCost(User user) throws UserNotLoggedInException {
         User loggedUser = UserSession.getInstance().getLoggedUser();
@@ -53,5 +53,5 @@ public class SubscriptionService {
         if (user == null) {
             throw new UserNotLoggedInException();
         }
-    }
+    }*/
 }
