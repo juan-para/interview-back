@@ -1,67 +1,57 @@
 package com.meli.interview.back.subscription_api.application.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.meli.interview.back.subscription_api.application.controller.request.CreateUserRequest;
 import com.meli.interview.back.subscription_api.application.service.UserService;
 import com.meli.interview.back.subscription_api.domain.User;
 import com.meli.interview.back.subscription_api.infrastructure.UserRepository;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ExtendWith(SpringExtension.class)
-@WebMvcTest(UserController.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UserControllerTest {
 
     @Autowired
-    private MockMvc mockMvc;
+    private TestRestTemplate restTemplate;
 
-    @Mock
+    @MockBean
     private UserService userService;
 
-    @Mock
+    @MockBean
     private UserRepository userRepository;
 
-    @InjectMocks
-    private UserController userController;
-
     @Test
-    public void testCreateUser() throws Exception {
+    public void testCreateUser() {
         User mockedUser = User.builder()
-                .id("1")
+                .id("123123")
                 .name("Juan")
                 .subscribedList(new ArrayList<>())
                 .build();
+
+        when(userService.createUser(anyString())).thenReturn(mockedUser);
 
         CreateUserRequest request = CreateUserRequest.builder()
                 .userName("Juan")
                 .build();
 
-        when(userService.createUser("Juan")).thenReturn(mockedUser);
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity("/createUser", request, String.class);
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        String requestJson = objectMapper.writeValueAsString(request);
+        // Verifica el estado y el cuerpo de la respuesta
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getBody()).contains("Usuario creado exitosamente:");
 
-        mockMvc.perform(post("/createUser")
-                        .content(requestJson)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().string("Usuario creado exitosamente: " + mockedUser));
-
-        verify(userService, times(1)).createUser("Juan");
+        // Verifica las interacciones con los mocks
+        verify(userService, times(1)).createUser(anyString());
         verify(userRepository, times(1)).saveUser(mockedUser);
     }
 }

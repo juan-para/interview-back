@@ -1,14 +1,14 @@
 package com.meli.interview.back.subscription_api.application.controller.request;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class CreateUserRequest {
     @NotBlank(message = "El nombre de usuario no puede estar en blanco")
