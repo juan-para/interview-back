@@ -46,11 +46,9 @@ public class UserControllerTest {
 
         ResponseEntity<String> responseEntity = restTemplate.postForEntity("/createUser", request, String.class);
 
-        // Verifica el estado y el cuerpo de la respuesta
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody()).contains("Usuario creado exitosamente:");
+        assertThat(responseEntity.getBody()).isNotNull().contains("Usuario creado exitosamente: 123123");
 
-        // Verifica las interacciones con los mocks
         verify(userService, times(1)).createUser(anyString());
         verify(userRepository, times(1)).saveUser(mockedUser);
     }
