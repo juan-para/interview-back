@@ -9,25 +9,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 public class SubscriptionService implements ISubscriptionService {
 
-
-    @Autowired
-    private FriendshipService friendshipService;
     @Autowired
     private UserService userService;
     @Autowired
     private SubscriptionService subscriptionService;
 
-    public SubscriptionService(FriendshipService friendshipService) {
-        this.friendshipService = friendshipService;
-    }
-
     /**
      * Devuelve el costo total de las suscripciones de un usuario siempre que el usuario que esté logueado
      * se encuentre en su lista de amigos
+     *
      * @param user
      * @return costo total de la suscripciones del user
      * @throws UserNotLoggedInException si no hay un usuario logueado
@@ -43,11 +38,11 @@ public class SubscriptionService implements ISubscriptionService {
 
     @Override
     public ArrayList<Subscription> findSubscriptionByUserId(String id) {
-        User user = userService.getUserById(id).get();
-        return user.getSubscribedList();
+        Optional<User> optionalUser = userService.getUserById(id);
+        return optionalUser.map(User::getSubscribedList).orElse(new ArrayList<>());
     }
 
-    private float calculateTotalPrice(ArrayList<Subscription> subscriptionList){
+    private float calculateTotalPrice(ArrayList<Subscription> subscriptionList) {
         float totalPrice = 0f;
         for (Subscription subscription : subscriptionList) {
             // No puede devolver nulo por como esta en el enum
