@@ -3,8 +3,10 @@
 	import com.meli.interview.back.subscription_api.domain.User;
 	import org.springframework.boot.SpringApplication;
 	import org.springframework.boot.autoconfigure.SpringBootApplication;
+	import org.springframework.context.annotation.ComponentScan;
 
 	@SpringBootApplication
+	@ComponentScan("com.meli.interview.back.subscription_api")
 	public class SubscriptionApplication {
 
 		public static void main(String[] args) {

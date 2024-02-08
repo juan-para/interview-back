@@ -1,6 +1,7 @@
 package com.meli.interview.back.subscription_api.application.controller;
 
 import com.meli.interview.back.subscription_api.application.controller.request.CreateUserRequest;
+import com.meli.interview.back.subscription_api.application.service.UserService;
 import com.meli.interview.back.subscription_api.domain.User;
 import com.meli.interview.back.subscription_api.domain.interfaces.IUserRepository;
 import com.meli.interview.back.subscription_api.domain.interfaces.IUserService;
@@ -20,7 +21,7 @@ import javax.validation.Valid;
 public class UserController {
 
     @Autowired
-    private IUserService userService;
+    private UserService userService;
     @Autowired
     private UserRepository userRepository;
 

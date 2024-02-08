@@ -27,6 +27,11 @@ dependencies {
 	// Para armar el response
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.6' // O la versión más reciente disponible
 
+	// Para pruebas unitarias
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.junit.jupiter:junit-jupiter-api'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+	testImplementation 'org.mockito:mockito-core'
 }
 
 test {
