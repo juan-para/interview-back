@@ -15,10 +15,11 @@ public class UserRepository implements IUserRepository {
     private List<User> userList = new ArrayList<>();
 
     @Override
-    public Optional<User> findUserById(String id) {
+    public User findUserById(String id) {
         return userList.stream()
                 .filter(user -> user.getId().equals(id))
-                .findFirst();
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
@@ -28,7 +29,7 @@ public class UserRepository implements IUserRepository {
 
     @Override
     public void addSubscriptionToUser(String userId, Subscription subscription) {
-        User updatedUser = findUserById(userId).get();
+        User updatedUser = findUserById(userId);
         updatedUser.getSubscribedList().add(subscription);
     }
 

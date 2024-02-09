@@ -12,13 +12,13 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 class SubscriptionServiceTest {
+
     @Mock
     private UserService userService;
 
@@ -32,34 +32,53 @@ class SubscriptionServiceTest {
 
     @Test
     void testGetUserSubscriptionsCost() throws UserNotLoggedInException {
-        // Logueo el usuario
-        User loggedUser = new User("1111", "Juan", new ArrayList<>());
-        UserSession.getInstance().setLoggedUser(loggedUser);
-
-        // Creo listado de subscripciones
         ArrayList<Subscription> subscriptions = new ArrayList<>();
         subscriptions.add(new Subscription(Partner.DISNEY));
         subscriptions.add(new Subscription(Partner.SPOTIFY));
 
-        when(subscriptionService.findSubscriptionByUserId("1111")).thenReturn(subscriptions);
-        when(userService.getUserById("1111")).thenReturn(Optional.of(loggedUser));
+        User loggedUser = new User("1111", "Juan", subscriptions);
 
+        // Crear una instancia de UserSession y Configurar la sesión del usuario
+        UserSession userSession = UserSession.getInstance();
+        userSession.setLoggedUser(loggedUser);
+
+        when(userService.getUserById("1111")).thenReturn(loggedUser);
 
         // Act
-        float expectedCost = subscriptionService.getUserSubscriptionsCost(loggedUser);
+        float cost = subscriptionService.getUserSubscriptionsCost(loggedUser);
 
         // Assert
-        assertEquals(expectedCost, Partner.DISNEY.getPrice() + Partner.SPOTIFY.getPrice());
+        assertEquals(Partner.DISNEY.getPrice() + Partner.SPOTIFY.getPrice(), cost);
     }
 
     @Test
     void testGetUserSubscriptionsCostUserNotLoggedIn() {
-        // Lo deslogueo al usuario
-        UserSession.getInstance().clearLoggedUser();
+        // Arrange
+        User loggedUser = new User("1111", "Juan", new ArrayList<>());
+        when(userService.getUserById("2222")).thenReturn(loggedUser);
 
-        User user = new User("2222", "Franco", new ArrayList<>());
+        // Act and Assert
+        assertThrows(UserNotLoggedInException.class, () -> subscriptionService.getUserSubscriptionsCost(loggedUser));
+    }
 
-        // Devuelvo una excepcion para la ejecucion del metodo
-        assertThrows(UserNotLoggedInException.class, () -> subscriptionService.getUserSubscriptionsCost(user));
+    @Test
+    void testFindSubscriptionByUserId() {
+        ArrayList<Subscription> subscriptions = new ArrayList<>();
+        subscriptions.add( new Subscription(Partner.DISNEY));
+        subscriptions.add( new Subscription(Partner.SPOTIFY));
+
+        User loggedUser = new User("2222", "Evangelina", subscriptions);
+
+        // Crear una instancia de UserSession y Configurar la sesión del usuario
+        UserSession userSession = UserSession.getInstance();
+        userSession.setLoggedUser(loggedUser);
+
+        when(userService.getUserById("2222")).thenReturn(loggedUser);
+
+        // Act
+        ArrayList<Subscription> result = subscriptionService.findSubscriptionByUserId("2222");
+
+        // Assert
+        assertEquals(subscriptions, result);
     }
 }

@@ -26,7 +26,7 @@ public class FriendshipService implements IFriendshipService {
     @Override
     public void addFriend(String userId, String friendId) {
         // Asumo que el amigo del usuario ya existe
-        User friend = userService.getUserById(friendId).get();
+        User friend = userService.getUserById(friendId);
         if(!userId.equals(friendId)){
             friendshipRepository.addFriend(userId, friend);
         } else {

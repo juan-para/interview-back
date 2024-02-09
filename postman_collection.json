@@ -36,8 +36,51 @@
 				{
 					"name": "subscribe",
 					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": \"5906728269108\",\n    \"partner\": \"SPOTIFY\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/subscribe",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"subscribe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "subscriptionCost",
+					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/subscriptionCost?userId=5906728269108",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"subscriptionCost"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "5906728269108"
+								}
+							]
+						}
 					},
 					"response": []
 				}
@@ -53,7 +96,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"userName\": \"Juan\"\n}",
+							"raw": "{\n    \"userName\": \"Pedro\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -85,7 +128,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"userId\": \"2808224954971\",\n    \"friendId\": \"2827734983519\"\n}",
+							"raw": "{\n    \"userId\": \"6348231698401\",\n    \"friendId\": \"6348231698401\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -124,6 +167,65 @@
 									"key": "userId",
 									"value": "2808224954971"
 								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": \"5906728269108\",\n    \"pass\" : \"1111\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": \"2213582736977\",\n    \"partner\": \"SPOTIFY\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/logout",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"logout"
 							]
 						}
 					},

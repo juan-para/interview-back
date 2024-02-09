@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IUserRepository {
-    Optional<User> findUserById(String id);
+    User findUserById(String id);
     void saveUser(User user);
     void addSubscriptionToUser(String userId, Subscription subscription);
 }

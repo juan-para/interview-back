@@ -16,8 +16,6 @@ public class SubscriptionService implements ISubscriptionService {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private SubscriptionService subscriptionService;
 
     /**
      * Devuelve el costo total de las suscripciones de un usuario siempre que el usuario que esté logueado
@@ -32,14 +30,18 @@ public class SubscriptionService implements ISubscriptionService {
         User loggedUser = UserSession.getInstance().getLoggedUser();
         checkUserLoggedIn(user, loggedUser);
 
-        ArrayList<Subscription> subscriptionList = subscriptionService.findSubscriptionByUserId(user.getId());
+        ArrayList<Subscription> subscriptionList = findSubscriptionByUserId(user.getId());
         return calculateTotalPrice(subscriptionList);
     }
 
     @Override
     public ArrayList<Subscription> findSubscriptionByUserId(String id) {
-        Optional<User> optionalUser = userService.getUserById(id);
-        return optionalUser.map(User::getSubscribedList).orElse(new ArrayList<>());
+        User user = userService.getUserById(id);
+        if(user != null){
+            return user.getSubscribedList();
+        } else{
+            return new ArrayList<>();
+        }
     }
 
     private float calculateTotalPrice(ArrayList<Subscription> subscriptionList) {

@@ -8,6 +8,6 @@ import java.util.Optional;
 
 public interface IUserService {
     User createUser(String userName);
-    Optional<User> getUserById(String id);
+    User getUserById(String id);
     void addSubscriptionByUser(String userId, Subscription subscription);
 }

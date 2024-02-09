@@ -14,7 +14,7 @@ public class FriendshipRepository implements IFriendshipRepository {
 
     private final Map<String, List<User>> friendsList = new HashMap<>();
     // Si tueviese que modificar de manera regular, para un usuario, el
-    // listado de amigos podria usar una lista enlaada para facil modificacion
+    // listado de amigos podria usar una lista enlazada como LinkedList para facil modificacion
 
     @Override
     public List<User> getFriends(String userId) {

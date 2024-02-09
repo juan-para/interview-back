@@ -23,9 +23,7 @@ public class AuthController {
     @ResponseBody
     public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
         // Suponemos que hay un servicio autenticador... y devuelve un usuario valido autenticado
-        UserSession.getInstance().setLoggedUser(
-                userService.getUserById(loginRequest.getUserId()).get()
-        );
+        UserSession.getInstance().setLoggedUser(userService.getUserById(loginRequest.getUserId()));
         return ResponseEntity.ok("Login successful");
     }
 

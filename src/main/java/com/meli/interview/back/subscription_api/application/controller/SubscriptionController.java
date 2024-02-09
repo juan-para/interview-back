@@ -5,6 +5,7 @@ import com.meli.interview.back.subscription_api.application.service.Subscription
 import com.meli.interview.back.subscription_api.application.service.UserService;
 import com.meli.interview.back.subscription_api.domain.Partner;
 import com.meli.interview.back.subscription_api.domain.Subscription;
+import com.meli.interview.back.subscription_api.domain.User;
 import com.meli.interview.back.subscription_api.infrastructure.SubscriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -47,11 +48,13 @@ public class SubscriptionController {
     @ResponseBody
     public ResponseEntity<String> getUserSubscriptionCost(@RequestParam String userId) {
         try {
-            //Asumo que existe el usuarioo para controlar sus subscripciones...
-            Float subscriptionCost = subscriptionService.getUserSubscriptionsCost(
-                    userService.getUserById(userId).orElseThrow(UserNotLoggedInException::new)
-            );
-            return ResponseEntity.ok("Total cost: "+ subscriptionCost);
+            User user = userService.getUserById(userId);
+            if(user != null){
+                Float subscriptionCost = subscriptionService.getUserSubscriptionsCost(userService.getUserById(userId));
+                return ResponseEntity.ok("Total cost: "+ subscriptionCost);
+            } else {
+                return ResponseEntity.status(404).body("User Not Found");
+            }
         } catch (UserNotLoggedInException e) {
             return ResponseEntity.status(401).body("User Not Logged In.");
         }
